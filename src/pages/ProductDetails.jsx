@@ -1,38 +1,46 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { CartContext } from '../contexts/CartContext'
-import './ProductDetail.css'
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
+import "./ProductDetails.css";
 
-const ProductDetail = () => {
-  const { id } = useParams()
-  const { addToCart } = useContext(CartContext)
-  const [product, setProduct] = useState(null)
+const ProductDetails = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const { cart, addToCart, increaseQuantity, decreaseQuantity } = useContext(CartContext);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const res = await fetch(`https://fakestoreapi.com/products/${id}`)
-      const data = await res.json()
-      setProduct(data)
-    }
-    fetchProduct()
-  }, [id])
+    fetch(`https://fakestoreapi.com/products/${id}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(data));
+  }, [id]);
 
-  if (!product) return <p>Loading...</p>
+  const cartItem = cart.find((item) => item.id === product?.id);
 
-  const { title, image, description, price, category } = product
+  if (!product) return <p>Loading...</p>;
 
   return (
-    <div className="product-detail">
-      <img src={image} alt={title} />
-      <div className="details">
-        <h2>{title}</h2>
-        <p className="category">{category}</p>
-        <p className="price">${price}</p>
-        <p className="desc">{description}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
+    <div className="product-details">
+      <img src={product.image} alt={product.title} />
+      <div className="product-details-content">
+        <h2>{product.title}</h2>
+        <p><strong>Category:</strong> {product.category}</p>
+        <p><strong>Price:</strong> ${product.price}</p>
+        <p>{product.description}</p>
+
+        {cartItem ? (
+          <div className="quantity-controls">
+            <button onClick={() => decreaseQuantity(product.id)}>-</button>
+            <span>{cartItem.quantity}</span>
+            <button onClick={() => increaseQuantity(product.id)}>+</button>
+          </div>
+        ) : (
+          <button className="add-to-cart-btn" onClick={() => addToCart(product)}>
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetail
+export default ProductDetails;

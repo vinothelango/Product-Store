@@ -7,6 +7,7 @@ import Cart from "./pages/Cart";
 import PrivateRoute from "./routes/PrivateRoute";
 import Header from "./components/Header";
 import Hero from "./hero/Hero";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -23,12 +24,19 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route
           path="/cart"
           element={
             <PrivateRoute>
               <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <PrivateRoute>
+              <ProductDetails />
             </PrivateRoute>
           }
         />

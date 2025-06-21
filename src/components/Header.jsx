@@ -7,7 +7,7 @@ import { auth } from '../firebaseConfig'
 import './Header.css'
 
 const Header = () => {
-  const { cart, totalAmount } = useContext(CartContext)
+  const { cart } = useContext(CartContext)
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -16,11 +16,16 @@ const Header = () => {
   const handleLogout = () => {
     signOut(auth).then(() => {
       navigate('/login')
+      setMenuOpen(false)
     })
   }
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
+  }
+
+  const handleLinkClick = () => {
+    setMenuOpen(false)
   }
 
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0)
@@ -34,8 +39,11 @@ const Header = () => {
       <button className="menu-toggle" onClick={toggleMenu}>☰</button>
 
       <nav className={`nav-links ${menuOpen ? 'show' : ''}`} id="navLinks">
-        <Link to="/">Home</Link>
-        <Link to="/cart">🛒 Cart ({cartItemCount})</Link>
+        
+        <button className="back-button" onClick={() => setMenuOpen(false)}>← Back</button>
+
+        <Link to="/" onClick={handleLinkClick}>Home</Link>
+        <Link to="/cart" onClick={handleLinkClick}>🛒 Cart ({cartItemCount})</Link>
 
         {user ? (
           <>
@@ -44,8 +52,8 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link to="/login" onClick={handleLinkClick}>Login</Link>
+            <Link to="/register" onClick={handleLinkClick}>Register</Link>
           </>
         )}
       </nav>

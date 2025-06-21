@@ -1,46 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CartContext } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
-import "./Payment.css";
+import "./Payments.css";
 
 const Payment = () => {
   const { cart, totalAmount, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+  const [method, setMethod] = useState("cod");
 
-  const handleRazorpay = () => {
+  const handleBack = () => navigate(-1);
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+
     if (cart.length === 0) {
-      alert("🛒 Your cart is empty!");
+      alert("🛒 Your cart is empty.");
       return;
     }
 
-    const options = {
-      key: "YOUR_KEY_ID",
-      amount: totalAmount * 100,
-      currency: "INR",
-      name: "Product Storeze",
-      description: "Payment for your order",
-      image: "https://your-logo.com/logo.png",
-      handler: function (response) {
-        alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
-        clearCart();
-        navigate("/");
-      },
-      prefill: {
-        name: "Vinoth",
-        email: "vinoth@email.com",
-        contact: "9000000000",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+    alert(`✅ Order placed successfully using ${method.toUpperCase()}!`);
+    clearCart();
+    navigate("/");
   };
 
   return (
     <div className="payment-container">
+      <button onClick={handleBack} className="back-button">← Back</button>
+
       <h2>🧾 Payment Page</h2>
 
       <div className="order-summary">
@@ -54,10 +40,31 @@ const Payment = () => {
         <h4>💰 Total: ₹{totalAmount.toFixed(2)}</h4>
       </div>
 
-      <div className="payment-form">
-        <h3>Pay with Razorpay</h3>
-        <button onClick={handleRazorpay}>Pay ₹{totalAmount.toFixed(2)}</button>
-      </div>
+      <form className="payment-form" onSubmit={handlePayment}>
+        <h3>Choose Payment Method</h3>
+
+        <select value={method} onChange={(e) => setMethod(e.target.value)} required>
+          <option value="cod">Cash on Delivery</option>
+          <option value="card">Credit/Debit Card</option>
+          <option value="upi">UPI</option>
+        </select>
+
+        {method === "card" && (
+          <>
+            <input type="text" placeholder="Card Number" required />
+            <input type="text" placeholder="MM/YY" required />
+            <input type="text" placeholder="CVV" required />
+          </>
+        )}
+
+        {method === "upi" && (
+          <>
+            <input type="text" placeholder="Enter UPI ID" required />
+          </>
+        )}
+
+        <button type="submit">Place Order</button>
+      </form>
     </div>
   );
 };

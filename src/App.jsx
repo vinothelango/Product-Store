@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
+import Payments from "./pages/Payments"
 import PrivateRoute from "./routes/PrivateRoute";
 import Header from "./components/Header";
 import Hero from "./hero/Hero";
@@ -24,6 +25,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route
           path="/cart"
           element={
@@ -32,11 +34,22 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/product/:id"
           element={
             <PrivateRoute>
               <ProductDetails />
+            </PrivateRoute>
+          }
+        />
+
+     
+        <Route
+          path="/payment"
+          element={
+            <PrivateRoute>
+              <Payments />
             </PrivateRoute>
           }
         />

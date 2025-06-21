@@ -1,52 +1,63 @@
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
-  background: #2A7B9B;
-background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap;
+  background-color: #2a9d8f;
+  padding: 15px 20px;
+  color: white;
+  position: relative;
 }
 
 .logo a {
   font-size: 24px;
-  font-weight: bold;
+  color: white;
   text-decoration: none;
-  color: #fff;
+  font-weight: bold;
 }
 
 .menu-toggle {
-  display: none;
+  font-size: 26px;
   background: none;
   border: none;
-  font-size: 28px;
   color: white;
   cursor: pointer;
+  display: none;
 }
 
 .nav-links {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
 }
 
-.nav-links a,
-.nav-links span {
-  text-decoration: none;
-  color: #fff;
-}
-
-.nav-links button {
+.nav-links a, .nav-links button {
+  color: white;
   background: none;
   border: none;
-  background-color: #e13f0e;
-  border-radius: 20px;
-  color: white;
-  padding: 10px;
+  font-size: 16px;
+  text-decoration: none;
   cursor: pointer;
 }
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: none;
+}
 
+@media (max-width: 768px) {
+  .back-button {
+    display: block;
+  }
+}
 
 @media (max-width: 768px) {
   .menu-toggle {
@@ -54,19 +65,30 @@ background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 
   }
 
   .nav-links {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100%;
+    width: 200px;
+    background-color: #264653;
     flex-direction: column;
-    align-items: flex-end;
-    display: none;
-    margin-top: 10px;
+    align-items: flex-start;
+    padding: 60px 20px;
+    gap: 20px;
+    z-index: 999;
+    transition: right 0.3s ease;
   }
 
   .nav-links.show {
-    display: flex;
+    right: 0;
   }
 
-  .nav-links a,
-  .nav-links span {
-    padding: 8px 0;
+  .nav-links a, .nav-links button, .nav-links span {
+    color: #fff;
+    width: 100%;
+    text-align: left;
   }
+  
 }
+
+

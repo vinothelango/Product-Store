@@ -24,6 +24,9 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <div className='ref'>
+          <p>@Developed by Vinoth</p>
+        </div>
       </div>
     </>
   )

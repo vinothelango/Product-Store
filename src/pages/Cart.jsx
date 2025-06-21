@@ -45,16 +45,18 @@ const navigate = useNavigate();
         </div>
       ))}
 
-      <div className="cart-summary">
-        <h3>Total Amount: ${totalAmount.toFixed(1)}</h3>
-        <button className="checkout-btn" onClick={clearCart}>
-          Checkout
-        </button>
+  <div className="cart-summary">
+  <h3>Total Amount: ${totalAmount.toFixed(2)}</h3>
+  <button className="checkout-btn" onClick={() => navigate("/payment")}>
+    Proceed to Payment
+  </button>
+</div>
+
         
 
       </div>
       
-    </div>
+  
   )
 }
 

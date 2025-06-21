@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="hero-overlay" />
       <img src={heroImg} alt="Hero" className="hero-bg" />
       <div className="hero-content">
-        <h1>Discover Trendy Styles</h1>
+        <h1 className='hr'>Discover Trendy Styles</h1>
         <p>Shop the latest fashion & elevate your wardrobe</p>
         <button className="hero-btn">Shop Now</button>
       </div>

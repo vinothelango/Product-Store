@@ -21,7 +21,7 @@ const MyOrders = () => {
         }
       }
 
-      setOrders(loadedOrders.reverse()); // latest first
+      setOrders(loadedOrders.reverse());
     });
   }, [userEmail]);
 
@@ -35,7 +35,7 @@ const MyOrders = () => {
 
   return (
     <div className="orders-container">
-      <h1>🧾 My Orders</h1>
+      <h1>My Orders</h1>
       {orders.length === 0 ? (
         <h2>Yet no more orders</h2>
       ) : (
@@ -53,7 +53,7 @@ const MyOrders = () => {
               ))}
             </ul>
 
-            <button onClick={() => handleCancelOrder(order.id)}>❌ Cancel Order</button>
+            <button onClick={() => handleCancelOrder(order.id)}>Cancel Order</button>
           </div>
         ))
       )}

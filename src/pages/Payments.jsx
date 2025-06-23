@@ -18,7 +18,7 @@ const Payment = () => {
       return;
     }
 
-    alert(`✅ Order placed successfully using ${method.toUpperCase()}!`);
+    alert(`Order placed successfully using ${method.toUpperCase()}!`);
     clearCart();
     navigate("/");
   };
@@ -27,17 +27,17 @@ const Payment = () => {
     <div className="payment-container">
       <button onClick={handleBack} className="back-button">← Back</button>
 
-      <h2>🧾 Payment Page</h2>
+      <h2>Payment Page</h2>
 
       <div className="order-summary">
-        <h3>🛒 Order Summary</h3>
+        <h3>Order Summary</h3>
         {cart.map((item) => (
           <div key={item.id} className="order-item">
             <span>{item.title} × {item.quantity}</span>
             <span>₹{(item.price * item.quantity).toFixed(2)}</span>
           </div>
         ))}
-        <h4>💰 Total: ₹{totalAmount.toFixed(2)}</h4>
+        <h4>Total: ₹{totalAmount.toFixed(2)}</h4>
       </div>
 
       <form className="payment-form" onSubmit={handlePayment}>
@@ -45,7 +45,7 @@ const Payment = () => {
 
         <select value={method} onChange={(e) => setMethod(e.target.value)} required>
           <option value="cod">Cash on Delivery</option>
-          <option value="card">Credit/Debit Card</option>
+         
           <option value="upi">UPI</option>
         </select>
 

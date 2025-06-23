@@ -2,13 +2,15 @@ import { createContext, useEffect, useState } from 'react'
 import { db } from '../firebaseConfig'
 import { ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid'
+import { getAuth } from 'firebase/auth' // ✅ Add this
 
 export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([])
+  const auth = getAuth() // ✅ Get current user
+  const user = auth.currentUser
 
-  
   useEffect(() => {
     const savedCart = localStorage.getItem('cart')
     if (savedCart) {
@@ -16,11 +18,9 @@ export const CartProvider = ({ children }) => {
     }
   }, [])
 
-  
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart])
-
 
   const saveProductToFirebase = (product) => {
     set(ref(db, 'cartProducts/' + product.id), {
@@ -32,7 +32,6 @@ export const CartProvider = ({ children }) => {
     })
   }
 
- 
   const addToCart = (product) => {
     const exists = cart.find((item) => item.id === product.id)
     if (exists) {
@@ -60,13 +59,15 @@ export const CartProvider = ({ children }) => {
       item.id === id ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 } : item
     ))
   }
+
   const clearCart = () => {
-    const orderId = uuidv4()
+    const orderId = uuidv4() // ✅ Declare first
     const orderRef = ref(db, 'orders/' + orderId)
 
     const orderData = {
       orderId,
       createdAt: new Date().toISOString(),
+      userEmail: user?.email || "guest", // ✅ Store user email
       items: cart.map(item => ({
         id: item.id,
         title: item.title,
@@ -81,10 +82,9 @@ export const CartProvider = ({ children }) => {
       .then(() => {
         console.log('✅ Order saved to Firebase')
         setCart([])
-       
       })
       .catch((err) => {
-        alert(' Failed to save order: ' + err.message)
+        alert('❌ Failed to save order: ' + err.message)
       })
   }
 

@@ -44,6 +44,7 @@ const Header = () => {
 
         <Link to="/" onClick={handleLinkClick}>Home</Link>
         <Link to="/cart" onClick={handleLinkClick}>🛒 Cart ({cartItemCount})</Link>
+        <Link to="/my-orders">My Orders</Link>
 
         {user ? (
           <>

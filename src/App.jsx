@@ -8,6 +8,7 @@ import Payments from "./pages/Payments"
 import PrivateRoute from "./routes/PrivateRoute";
 import Header from "./components/Header";
 import Hero from "./hero/Hero";
+import MyOrders from "./pages/MyOrders"; 
 import ProductDetails from "./pages/ProductDetails";
 
 function App() {
@@ -53,7 +54,16 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+  path="/my-orders"
+  element={
+    <PrivateRoute>
+      <MyOrders />
+    </PrivateRoute>
+  }
+/>
       </Routes>
+      
     </>
   );
 }
